@@ -9,18 +9,17 @@ This repository contains a full-stack application with:
 
 1. Clone the repository:
    ```bash
-   git clone <your-repo-url>
-   cd <repo-folder>
+   git clone (https://github.com/mistura/quovoy-lead-project.git)
+   cd quovoy-lead-project
 Install dependencies:
 
 bash
-Copy code
 npm install
 Run the apps:
 
 bash
 Copy code
 # Frontend
-npm run dev --workspace=apps/frontend
+npm run dev quovoy-lead-project/apps/frontend
 # Backend
-npm run start:dev --workspace=apps/backend
+npm run start:dev quovoy-lead-project/apps/backend

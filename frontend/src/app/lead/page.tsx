@@ -1,15 +1,32 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
-import { Table, Button, Modal, Form, Input, message, Layout, Menu } from "antd";
-import { UserAddOutlined} from "@ant-design/icons";
+import {
+  Table,
+  Button,
+  Modal,
+  Form,
+  Input,
+  message,
+  Layout,
+  Menu,
+} from "antd";
+import { UserAddOutlined } from "@ant-design/icons";
 import api from "../../../lib/api";
 import { format } from "date-fns";
 
 const { Sider, Content, Header } = Layout;
 
+interface Lead {
+  id: number;
+  name: string;
+  email: string;
+  status: string;
+  createdAt: string;
+}
+
 export default function Dashboard() {
-  const [leads, setLeads] = useState<any[]>([]);
+  const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
@@ -17,9 +34,9 @@ export default function Dashboard() {
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const res = await api.get("/leads");
+      const res = await api.get<Lead[]>("/leads");
       setLeads(res.data);
-    } catch (err) {
+    } catch {
       message.error("Failed to fetch leads");
     } finally {
       setLoading(false);
@@ -38,7 +55,7 @@ export default function Dashboard() {
       form.resetFields();
       setIsModalOpen(false);
       fetchLeads();
-    } catch (err: any) {
+    } catch {
       message.error("Failed to add lead");
     }
   };
@@ -90,7 +107,7 @@ export default function Dashboard() {
           </Button>
         </Header>
         <Content style={{ margin: "16px" }}>
-          <Table
+          <Table<Lead>
             columns={columns}
             dataSource={leads}
             rowKey="id"
